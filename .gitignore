@@ -1,0 +1,17 @@
+# Entornos de desarrollo y Sistemas Operativos
+.idea/
+.vscode/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Herramientas de Calidad
+.sonar/
+.scannerwork/
+coverage/
+
+# Documentación compilada
+docs/build/
