@@ -203,6 +203,7 @@ Mapeo de los Bloques de Construcción a Infraestructura
 |----|----------|---------------------------|---------------|
 | ADR-01 | Estrategia de IA: Edge AI (On-Device) | Procesamiento en la nube (Serverless + APIs externas). | Garantiza coste 0€ de mantenimiento, elimina la latencia de red y asegura la privacidad del usuario al no enviar imágenes biométricas a servidores externos. |
 | ADR-02 | Stack Frontend: Flutter (Dart) | - | Rendimiento casi nativo, compilación multiplataforma (iOS/Android) y excelente soporte para IA On-Device (Edge AI). |
+| ADR-03 | Inyección de Dependencias: Service Locator (get_it) | Provider, InheritedWidget. | Desacopla la creación de objetos de su uso globalmente y sin depender del contexto de Flutter, lo que facilita aplicar Clean Architecture. |
 
 # Requerimientos de Calidad
 
