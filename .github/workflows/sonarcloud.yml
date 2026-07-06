@@ -1,0 +1,37 @@
+name: Integración Continua (Flutter & SonarCloud)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build_and_analyze:
+    name: Construcción y Análisis
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Necesario para que SonarCloud evalúe el historial
+
+      - name: Configurar Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Instalar dependencias
+        working-directory: ./mobile
+        run: flutter pub get
+        
+      - name: Ejecutar Tests y Cobertura
+        working-directory: ./mobile
+        run: flutter test --coverage
+        # Este paso genera el archivo mobile/coverage/lcov.info que lee SonarCloud
+
+      - name: Escaneo de SonarCloud
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
