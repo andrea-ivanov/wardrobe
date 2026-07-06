@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  // Aquí inicializaremos la Inyección de Dependencias más adelante
+import 'package:wardrobe/core/injection/service_locator.dart';
+
+Future<void> main() async {
+  // Aseguramos que Flutter esté inicializado antes de ejecutar código asíncrono
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Inicializamos la Inyección de Dependencias
+  await setupLocator();
+  
   runApp(const ArmarioVirtualApp());
 }
 

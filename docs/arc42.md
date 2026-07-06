@@ -47,9 +47,8 @@ Alta usabilidad (interfaz intuitiva para subir fotos), bajo acoplamiento (separa
 
 ## Contexto de Negocio
 
-**\<Diagrama o Tabla\>**
-
-**\<optionally: Explanation of external domain interfaces\>**
+El sistema es una aplicación móvil (Armario Virtual) que interactúa con el **Usuario Final**. El usuario toma fotografías de sus prendas de ropa y el sistema, mediante Inteligencia Artificial en el dispositivo (Edge AI), extrae las características (color, estilo, categoría). El usuario también puede escanear su rostro para que el sistema analice su colorimetría. 
+El sistema genera sugerencias de "outfits" basados en el estilo seleccionado (informal, playero, deportivo, etc.) y las características del usuario.
 
 ## Contexto Técnico
 
@@ -60,6 +59,8 @@ Alta usabilidad (interfaz intuitiva para subir fotos), bajo acoplamiento (separa
 **\<Mapeo de Entrada/Salida a canales\>**
 
 # Estrategia de solución
+
+Adoptamos una arquitectura **Clean Architecture** orientada a características (Feature-First) para asegurar un bajo acoplamiento. Se utiliza el patrón **Service Locator (get_it)** para la inyección de dependencias y **Edge AI** (Modelos embebidos en el dispositivo) para la Inteligencia Artificial, reduciendo costes a 0 y maximizando la privacidad.
 
 # Vista de Bloques
 
@@ -203,18 +204,31 @@ Mapeo de los Bloques de Construcción a Infraestructura
 |----|----------|---------------------------|---------------|
 | ADR-01 | Estrategia de IA: Edge AI (On-Device) | Procesamiento en la nube (Serverless + APIs externas). | Garantiza coste 0€ de mantenimiento, elimina la latencia de red y asegura la privacidad del usuario al no enviar imágenes biométricas a servidores externos. |
 | ADR-02 | Stack Frontend: Flutter (Dart) | - | Rendimiento casi nativo, compilación multiplataforma (iOS/Android) y excelente soporte para IA On-Device (Edge AI). |
+| ADR-03 | Inyección de Dependencias: Service Locator (get_it) | Provider, InheritedWidget. | Desacopla la creación de objetos de su uso globalmente y sin depender del contexto de Flutter, lo que facilita aplicar Clean Architecture. |
+| ADR-04 | Base de Datos Local: Isar | SQLite, Hive. | Motor NoSQL ultrarrápido, ideal para consultas complejas y filtrado de ropa por color/estilo en milisegundos. |
 
 # Requerimientos de Calidad
 
 ## Árbol de Calidad
+1. **Privacidad:** (Alta) Las fotos del rostro y prendas del usuario nunca deben abandonar el dispositivo.
+2. **Coste:** (Alta) El mantenimiento de infraestructura (servidores, API keys) debe ser 0€.
+3. **Rendimiento:** (Media) La sugerencia de outfits y el análisis de la IA deben ser rápidos (idealmente menos de 2-3 segundos) para brindar una experiencia de usuario fluida.
 
 ## Escenarios de calidad
+- **Escenario de Privacidad (Colorimetría):** Cuando el usuario escanea su rostro para extraer la colorimetría, la imagen de la cámara se procesa directamente en la memoria RAM y se descarta inmediatamente tras calcular los parámetros. Ninguna foto del rostro debe guardarse en el almacenamiento del dispositivo ni mucho menos en la nube.
 
 # Riesgos y deuda técnica
+
+- **Riesgo (Tamaño de la App):** El tamaño del binario de la aplicación (`.apk` / `.ipa`) puede crecer significativamente al tener que incluir embebidos los modelos de Inteligencia Artificial (TFLite u otros) localmente.
+- **Riesgo (Dispositivos Antiguos):** Los teléfonos móviles de gama baja o muy antiguos podrían sufrir latencia excesiva o calentamiento al ejecutar los modelos de inferencia de IA.
+- **Deuda Técnica (Sin Nube):** Al no contar (por ahora) con un backend de sincronización en la nube para ahorrar costes, si el usuario cambia de dispositivo o lo pierde, pierde su armario virtual. Se debería añadir funcionalidad de exportación local o backup a Google Drive / iCloud en el futuro.
 
 # Glosario
 
 | Término         | Definición         |
 |-----------------|--------------------|
-| *\<Término-1\>* | *\<definicion-1\>* |
-| *\<Término-2\>* | *\<definicion-2\>* |
+| **Colorimetría**| Análisis de los colores que más favorecen a una persona basándose en el contraste de su tono de piel, color de ojos y cabello. |
+| **Edge AI**     | Inteligencia Artificial cuyos modelos se ejecutan en local, en el extremo (dispositivo móvil), en lugar de enviar datos a un servidor para procesarse. |
+| **Service Locator**| Patrón de diseño donde un "localizador" (ej. `get_it`) se encarga de instanciar y proveer objetos globales ya configurados a cualquier parte del código que los pida. |
+| **Clean Architecture**| Estilo arquitectónico (promulgado por Robert C. Martin) que propone la estricta separación de responsabilidades en capas concéntricas, asegurando que las reglas de negocio (Dominio) sean el centro inmutable del sistema. |
+| **Isar**        | Motor de base de datos embebido NoSQL para Flutter, optimizado para alto rendimiento, consultas avanzadas y almacenamiento en disco de forma síncrona/asíncrona. |
