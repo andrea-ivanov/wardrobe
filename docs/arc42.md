@@ -206,6 +206,7 @@ Mapeo de los Bloques de Construcción a Infraestructura
 | ADR-02 | Stack Frontend: Flutter (Dart) | - | Rendimiento casi nativo, compilación multiplataforma (iOS/Android) y excelente soporte para IA On-Device (Edge AI). |
 | ADR-03 | Inyección de Dependencias: Service Locator (get_it) | Provider, InheritedWidget. | Desacopla la creación de objetos de su uso globalmente y sin depender del contexto de Flutter, lo que facilita aplicar Clean Architecture. |
 | ADR-04 | Base de Datos Local: Isar | SQLite, Hive. | Motor NoSQL ultrarrápido, ideal para consultas complejas y filtrado de ropa por color/estilo en milisegundos. |
+| ADR-05 | Gestión de Estado: Riverpod | BLoC, Provider, MobX. | Seguro en tiempo de compilación, sintaxis declarativa, rendimiento óptimo y no depende del BuildContext, alineándose perfectamente con Clean Architecture. |
 
 # Requerimientos de Calidad
 
