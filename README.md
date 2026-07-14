@@ -1,3 +1,5 @@
+[![Integración Continua (Flutter & SonarCloud)](https://github.com/andrea-ivanov/wardrobe/actions/workflows/sonarcloud.yml/badge.svg)](https://github.com/andrea-ivanov/wardrobe/actions/workflows/sonarcloud.yml) [![Quality gate status](https://sonarcloud.io/api/project_badges/measure?project=andrea-ivanov_wardrobe&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=andrea-ivanov_wardrobe)
+
 ## Licencia
 
 **Required Notice: Copyright 2026 Andrea Ivanov García (https://github.com/andrea-ivanov)**
