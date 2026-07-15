@@ -1,8 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() {
-  // Aquí inicializaremos la Inyección de Dependencias más adelante
-  runApp(const ArmarioVirtualApp());
+import 'package:wardrobe/core/injection/service_locator.dart';
+
+Future<void> main() async {
+  // Aseguramos que Flutter esté inicializado antes de ejecutar código asíncrono
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  // Inicializamos la Inyección de Dependencias
+  await setupLocator();
+  
+  runApp(
+    const ProviderScope(
+      child: ArmarioVirtualApp(),
+    ),
+  );
 }
 
 class ArmarioVirtualApp extends StatelessWidget {

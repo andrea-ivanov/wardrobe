@@ -203,6 +203,7 @@ Mapeo de los Bloques de Construcción a Infraestructura
 |----|----------|---------------------------|---------------|
 | ADR-01 | Estrategia de IA: Edge AI (On-Device) | Procesamiento en la nube (Serverless + APIs externas). | Garantiza coste 0€ de mantenimiento, elimina la latencia de red y asegura la privacidad del usuario al no enviar imágenes biométricas a servidores externos. |
 | ADR-02 | Stack Frontend: Flutter (Dart) | - | Rendimiento casi nativo, compilación multiplataforma (iOS/Android) y excelente soporte para IA On-Device (Edge AI). |
+| ADR-03 | Gestión de Estado: Riverpod (con Generador de Código) | Riverpod clásico, BLoC, Provider. | Ofrece seguridad en tiempo de compilación, sintaxis moderna declarativa y generación de código (`riverpod_generator`) para evitar errores manuales, encajando perfectamente con Clean Architecture. |
 
 # Requerimientos de Calidad
 
